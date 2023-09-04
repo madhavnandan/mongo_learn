@@ -1,0 +1,185 @@
+#Introdustion
+
+Mongo Db is an open-source , document-oriented NoSQL database
+management system
+
+Mongo db store data in forn of JSON file.
+
+Mongo Db create 10Gen Company then 10 gen change name in
+Mongo
+
+#In Mongo Db
+1) Ignore feild
+2) Add Extra feild 
+3) All the feilds are documents
+4) Mongo Db Schemaless
+
+
+#check mongodb and shell version
+ - mongosh              //cmd
+
+#run mongo shell cmd :-
+ - mongosh
+
+#Mongo Db CMD :-
+1) show dbs;   //show database
+2) use <database name>;  //create database
+3) db.dropDatabase();    //delete database
+
+4) show collections;     //show collections (table name)
+5) db.createCollection('<collection-name>');     // Create collection
+6) db.<collection-name>.drop();          // delete collection
+
+
+#CRUD
+
+1) Inserting documents
+
+  * insert one :-
+
+    db.<collection-name>.insertOne({
+        field1: value1,
+        field2: value2,
+        .....
+    });
+
+
+   * insert many :-
+
+     db.<collection-name>.insertMany([
+        {field1: value1,field2: value2,.....},
+        {field1: value1,field2: value2,.....},
+        .........
+    ]);
+
+    //user single quate ( ' ') to feild name are use to space. eg ( "first name": "madhav" )
+    // mongodb collection are case sentitive.
+
+2) Read Operation :--
+  
+  * findind document :--
+
+    find() :--
+      db.<collection-name>.find({key: value});
+
+      eg;- db.user.find(),
+           db.user.find({name: "madhav"})
+
+    findOne() :---
+      db.<collection-name>.findOne({key: value});  
+
+      eg:-  db.user.findOne({username: "madhav75"})
+
+
+   * Comparison Operators
+
+    $eq  //equal to
+    $ne  //not equal to
+    $gt  //greater than
+    $gte //greater than equal
+    $lt  //less than
+    $lte  //less than equal
+    $in   //in Operators
+    $nin  //not in   
+
+    - db.collection_name.find({'fieldname': {$operator: value}});
+
+    eg db.user.find({'name': {$eq: 'madhav'}}),
+       db.user.find({age: {$in: [20 , 45 ,52]}})
+
+  
+  * Cursor :--
+    
+    Cursor Methods :--
+     1) count() :--
+        - db.user.find({age: {$in: [20 , 45 ,52]}}).count()
+        
+     2) limit() :--
+        - db.user.find({age: {$in: [20 , 45 ,52]}}).limit(1)
+
+     3) skip() :--
+         - db.user.find({age: {$in: [20 , 45 ,52]}}).skip(1)
+
+     4) sort() :--
+         - db.user.find().sort({age: 1})
+         //1 for ascending and -1 for descending
+
+  * Logical Operators:---
+
+    1) $and :--
+       - db.user.find({$and: [{'name': {$eq: 'madhav'}},{'password': '123456'}]})
+    1) $or :--
+       -  db.user.find({$or: [{'name': {$eq: 'madhav'}},{'password': '1234562548'}]})
+    1) $not :--
+       -  db.user.find({age: {$not: {$eq:20}}})
+    1) $nor :--   
+      -  db.user.find({$nor: [{'name': {$eq: 'madhav'}},{'password': '123456'}]}),
+         db.user.find({$nor: [{'name': {$eq: 'madhavj'}},{'password': '1234565'}]})    
+
+   * Complex Expressions :--
+     The $expr operator allows using aggregation Expressions within a query.
+     Syntax : {$expr: {operator: {find, value}}}
+
+   * Elements operator :--
+     $exists  ,   $type   ,   $size
+
+   * Projection :--
+     db.collection.find({},{field1: 1,field2: 2})
+
+    -to include specific field, use Projection with a value of 1 for the fields you want.
+    - sirf document me se ek field dikhana hai jese sirf user me se name field chahiye.
+    -field: 1 means dikhana hai or feild: 0 means nahi dikhana hai.
+
+   * Embedded Documents :--
+     - Query documents inside embedded documents using dot notation
+     - db.collection.find({"parent.child": value})
+
+3) Update Operations in MongoDB :--
+   - updateOne() and updateMany()
+   - Removing and renaming field
+   - Addind , renaming items from array
+   - updating embedded documents
+
+
+ db.collection_name.updateOne(
+   {filter},
+   {$set: {existingField: newValue,newField: "new value",//...},}
+ );
+
+ db.collection_name.updateMany(
+   {filter},
+   {$set: {existingField: newValue,newField: "new value",//...},}
+ );
+
+ * Removing and Renaming fields :--
+  db.collection_name.updateOne({filter},{$unset: {fieldName: 1}});
+
+  db.collection_name.updateOne{
+   {filter},
+   {$rename: {oldFeldName: "newFieldName"}}
+  };
+
+
+ 4) Delete Operation in MongoDB :--
+   - db.collection_name.deleteOne({filter});
+
+   - db.sales.deleteMany({ price:55}); 
+
+#importing JSON in mongodb
+
+if without array :-
+   - mongoimport jsonfile.json -d database_name -c collection_name
+   eg mongoimport products.json -d shop -c products
+
+with array :-
+  - mongoimport jsonfile.json -d database_name -c collection_name --jsonArray
+
+
+Indexes in MongoDB :--
+
+Aggregation in MongoDB :--
+
+Introdustion to MangoDB Drivers :--
+
+  - npm install mongodb
+  
